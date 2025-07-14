@@ -1,7 +1,5 @@
-// Post.js - Mongoose model for blog posts
-
+//blogpost
 const mongoose = require('mongoose');
-
 const PostSchema = new mongoose.Schema(
   {
     title: {
@@ -25,7 +23,7 @@ const PostSchema = new mongoose.Schema(
     },
     excerpt: {
       type: String,
-      maxlength: [200, 'Excerpt cannot be more than 200 characters'],
+      maxlength: [200, 'Excerpt cannot be more than 250 characters'],
     },
     author: {
       type: mongoose.Schema.Types.ObjectId,

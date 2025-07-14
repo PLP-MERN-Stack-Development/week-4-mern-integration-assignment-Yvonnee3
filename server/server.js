@@ -1,23 +1,32 @@
-// server.js - Main server file for the MERN blog application
+
 
 // Import required modules
+const dotenv = require('dotenv');
+dotenv.config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const dotenv = require('dotenv');
+
 const path = require('path');
 
-// Import routes
-const postRoutes = require('./routes/posts');
-const categoryRoutes = require('./routes/categories');
-const authRoutes = require('./routes/auth');
 
-// Load environment variables
-dotenv.config();
+// Connect to MongoDB
+const connectDB = require('./config/db.js');
+connectDB();
+
+// Import routes
+const postRoutes = require('./routes/postRoutes.js');
+const categoryRoutes = require('./routes/categoryRoutes.js');
+const authRoutes = require('./routes/authRoutes.js');
+
+
 
 // Initialize Express app
 const app = express();
 const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
 
 // Middleware
 app.use(cors());
@@ -36,9 +45,9 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // API routes
-app.use('/api/posts', postRoutes);
-app.use('/api/categories', categoryRoutes);
-app.use('/api/auth', authRoutes);
+app.use('/api/posts', require('./routes/postRoutes'));
+app.use('/api/categories', require('./routes/categoryRoutes'));
+app.use('/api/auth', require('./routes/authRoutes'));
 
 // Root route
 app.get('/', (req, res) => {
